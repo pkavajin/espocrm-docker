@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: espocrm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: espocrm
+  template:
+    metadata:
+      labels:
+        name: espocrm
+    spec:
+      initContainers:
+      - name: volume-mount-perms
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        command: ["sh", "-c", "chown -R nginx:nginx /data"]
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      containers:
+      - name: espocrm
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: data
+            mountPath: /usr/share/nginx/html/data
+            subPath: data
+          - name: data
+            mountPath: /usr/share/nginx/html/custom
+            subPath: custom
+          - name: data
+            mountPath: /usr/share/nginx/html/client/custom
+            subPath: clientcustom
+        ports:
+          - containerPort: 80
+      - name: cron
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        command: [ 'sh', '-c', 'while true; do php -f /usr/share/nginx/html/cron.php && sleep 60; done;' ]
+        volumeMounts:
+          - name: data
+            mountPath: /usr/share/nginx/html/data
+            subPath: data
+          - name: data
+            mountPath: /usr/share/nginx/html/custom
+            subPath: custom
+          - name: data
+            mountPath: /usr/share/nginx/html/client/custom
+            subPath: clientcustom
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
