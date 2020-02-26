@@ -1,4 +1,4 @@
-ESPOCRM_VERSION := 5.6.14
+ESPOCRM_VERSION := 5.7.11
 IMAGE := kavatech/espocrm:$(ESPOCRM_VERSION)
 
 docker-build:

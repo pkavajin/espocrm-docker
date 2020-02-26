@@ -2,7 +2,7 @@ FROM nginx:1.17.4
 ARG ESPOCRM_VERSION
 
 RUN apt-get update && \
-    apt-get install -y wget php-fpm php-mysql php-json php-gd php-zip php-imap php-mbstring php-curl unzip php-xml
+    apt-get install -y wget php-mailparse php-fpm php-mysql php-json php-gd php-zip php-imap php-mbstring php-curl unzip php-xml
 
 RUN mkdir mkdir /run/php
 RUN phpenmod imap mbstring
@@ -10,6 +10,7 @@ COPY ./start.sh /start.sh
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 COPY ./www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY ./php.ini /etc/php/7.3/fpm/php.ini
+COPY ./php.ini /etc/php/7.3/cli/php.ini
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 RUN rm -fr /usr/share/nginx/html/*
