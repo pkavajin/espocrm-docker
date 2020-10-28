@@ -39,7 +39,7 @@ spec:
       - name: cron
         image: {{ .Values.image }}
         imagePullPolicy: Always
-        command: [ 'sh', '-c', 'while true; do php -f /usr/share/nginx/html/cron.php && sleep 60; done;' ]
+        command: [ 'sh', '-c', 'cp -r /usr/share/nginx/html/data/___plugins/* /usr/share/nginx/html; while true; do php -f /usr/share/nginx/html/cron.php && sleep 60; done;' ]
         volumeMounts:
           - name: data
             mountPath: /usr/share/nginx/html/data

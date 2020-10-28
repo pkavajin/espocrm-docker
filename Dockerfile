@@ -25,6 +25,7 @@ RUN chown -R nginx:nginx /usr/share/nginx/html
 
 WORKDIR /usr/share/nginx/html
 
+COPY ./hackz /usr/share/nginx/html/___hackz
 RUN find . -type d -exec chmod 755 {} + && find . -type f -exec chmod 644 {} +;
 RUN find data custom client/custom -type d -exec chmod 775 {} + && find data custom client/custom -type f -exec chmod 664 {} +;
 RUN chmod 775 application/Espo/Modules client/modules;

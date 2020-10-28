@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cp -r /usr/share/nginx/html/___hackz/* /usr/share/nginx/html
 
 if [ -d "/usr/share/nginx/html/data/___plugins" ]
 then
