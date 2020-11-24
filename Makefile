@@ -1,5 +1,5 @@
-ESPOCRM_VERSION := 6.0.3-1
-IMAGE := kavatech/espocrm:$(ESPOCRM_VERSION)
+ESPOCRM_VERSION := 6.0.3
+IMAGE := kavatech/espocrm:$(ESPOCRM_VERSION)-1
 
 docker-build:
 	docker build --build-arg ESPOCRM_VERSION='$(ESPOCRM_VERSION)' -t $(IMAGE) .
